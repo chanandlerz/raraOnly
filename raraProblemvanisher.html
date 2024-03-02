@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comforting Website</title>
+<!--link rel="stylesheet" href="styles.css"-->
+<style>
+   body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5dc;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid #b8a46d; /* Beige border color */
+  border-radius: 10px;
+  resize: none;
+  font-size: 16px;
+  color: #b8a46d; /* Beige text color */
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #b8a46d; /* Beige background color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s ease;
+  font-family: 'Arial', sans-serif;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+#greeting-page {
+  background-color: #f5f5dc; /* Beige background color */
+  color: #b8a46d; /* Beige text color */
+  text-align: center;
+  font-size: 24px;
+  padding: 40px 20px; /* Increased padding */
+  height: 100vh; /* Make sure the background covers the whole page */
+}
+
+#problem-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bubble {
+  background-color: #b8a46d; /* Beige background color */
+  color: white;
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 80%;
+  margin: 20px auto;
+  font-size: 18px;
+  animation: pop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div id="greeting-page" class="page">
+    <h1>Hello dear!</h1>
+    <p>How was your day?</p>
+    <p>Is there anything that made you in a bad mood?</p>
+    <p>If so, feel free to tell me.</p>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScEzhuIexYpfStnrtN-Q_b8d8wncZ2-riZ904KPJ429dFAVHQ/viewform?usp=sf_link" style="display: none;"></iframe>
+    <button onclick="showProblemPage()">Share your problem</button>
+  </div>
+  
+  <div id="problem-page" class="page hidden">
+    <textarea id="problem-text" placeholder="Type your problem here..."></textarea>
+    <button onclick="sendProblem()">Send</button>
+  </div>
+</div>
+
+<script>
+function showProblemPage() {
+  document.getElementById('greeting-page').classList.add('hidden');
+  document.getElementById('problem-page').classList.remove('hidden');
+}
+
+function sendProblem() {
+  var problem = document.getElementById('problem-text').value;
+  if(problem.trim() !== '') {
+    var bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    bubble.innerText = problem;
+    document.body.appendChild(bubble);
+    setTimeout(function() {
+      bubble.style.opacity = '0';
+      bubble.style.transform = 'scale(0)';
+      setTimeout(function() {
+        bubble.remove();
+        document.getElementById('problem-text').value = '';
+        document.getElementById('greeting-page').classList.remove('hidden');
+        document.getElementById('problem-page').classList.add('hidden');
+      }, 1000);
+    }, 1000);
+  }
+}
+</script>
+
+</body>
+</html>
